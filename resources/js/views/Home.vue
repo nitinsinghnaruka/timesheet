@@ -1,0 +1,67 @@
+<template>
+  <base-layout>
+
+    <div class="home">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+            <!-- App Time -->
+            <app-time></app-time>
+            <!--/ App Time -->
+
+            <div class="card rounded shadow-sm mt-1">
+              <div class="card-body">
+                <div class="card-title align-middle">
+                  <div class="float-left">
+                    <img :src="$appURL + 'images/user.png'" :alt="$store.state.auth.user.name" class="user-image">
+                  </div>
+                  <div class="float-left ml-2 mt-1">
+                    <div class="user-name">{{ $store.state.auth.user.name }}</div>
+                    <a href="#" class="text-muted logout" @click.prevent="">Logout</a>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="mt-2">
+                  <router-link to="projects" class="card-link text-success">Projects</router-link>
+                </div>
+              </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <!-- Calculate Time -->
+            <app-calculate-time></app-calculate-time>
+            <!--/ Calculate Time -->
+        </div>
+      </div>
+    </div>
+
+  </base-layout>
+</template>
+
+<script>
+import BaseLayout from './BaseLayout.vue';
+import AppTime from '../components/AppTime.vue';
+import AddCurrentTask from '../components/AddCurrentTask.vue';
+import AppCalculateTime from '../components/AppCalculateTime.vue';
+
+export default {
+  components: {
+    BaseLayout,
+    AppTime,
+    AddCurrentTask,
+    AppCalculateTime,
+  } 
+}
+</script>
+
+<style scoped>
+.home .user-image {
+  width: 40px;
+}
+
+.home .logout {
+  font-size: 12px;
+  position: relative;
+  bottom: 10px;
+}
+</style>
