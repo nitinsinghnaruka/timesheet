@@ -16,7 +16,7 @@ const instance = axios.create({
 });
 //-------------------
 
-// Request interceptors.
+// Request interceptors
 instance.interceptors.request.use(function (config) {
   // Set authorization token
   let token = store.state.auth.token;
@@ -30,6 +30,7 @@ instance.interceptors.request.use(function (config) {
 }, function (error) {
   return Promise.reject(error);
 });
+//---------------------
 
 // Response interceptors
 instance.interceptors.response.use(function (response) {

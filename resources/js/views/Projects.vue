@@ -47,9 +47,9 @@
 
     </base-layout>
 
-    <!-- Add project -->
-    <add-project></add-project>
-    <!--/ Add project -->
+    <!-- Add project modal -->
+    <add-project-modal></add-project-modal>
+    <!--/ Add project modal -->
 
   </div>
 
@@ -57,12 +57,12 @@
 
 <script>
 import BaseLayout from './BaseLayout.vue';
-import AddProject from '../components/AddProject.vue';
+import AddProjectModal from '../components/AddProjectModal.vue';
 
 export default {
   components: {
     BaseLayout,
-    AddProject
+    AddProjectModal
   },
   data () {
     return {

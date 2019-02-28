@@ -6,22 +6,26 @@ class Auth {
    * @param {*} user
    */
   store (token, user) {
-    // Store token.
+    // Store token
     localStorage.setItem('token', token);
+    //------------
 
-    // Store user.
+    // Store user
     localStorage.setItem('user', JSON.stringify(user));
+    //-----------
   }
 
   /**
    * Clear auth data from local storage.
    */
   clear () {
-    // Remove token.
+    // Remove token
     localStorage.removeItem('token');
+    //-------------
 
-    // Remove user.
+    // Remove user
     localStorage.removeItem('user');
+    //------------
   }
 }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\Project\StoreProject;
+use App\Http\Requests\API\Project\UpdateProject;
 use App\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,7 +18,7 @@ class ProjectController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('api');
+        $this->middleware('auth:api');
     }
 
     /**
@@ -88,7 +89,7 @@ class ProjectController extends Controller
     /**
      * Show project.
      * 
-     * @param  $project_id
+     * @param  mixed  $project_id
      * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
      */
     public function show($project_id)
@@ -115,6 +116,72 @@ class ProjectController extends Controller
             ];
         }
         //-------------
+
+        return response()->json($response, 200);
+    }
+
+    /**
+     * Update project.
+     * 
+     * @param  UpdateProject  $request
+     * @param  mixed          $project_id
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
+     */
+    public function update(UpdateProject $request, $project_id)
+    {
+        // Update project
+        $project = Project::find($project_id);
+        $project->name        = $request['name'];
+        $project->description = $request['description'];
+        $updated = $project->save();
+        //---------------
+
+        // Set response
+        if ($updated) {
+            $response = [
+                'status'  => true,
+                'message' => 'Project updated.',
+                'project' => $project
+            ];
+        } else {
+            $response = [
+                'status'  => false,
+                'message' => 'Unable to update project, Please try again!',
+                'project' => null
+            ];
+        }
+        //-------------
+
+        return response()->json($response, 200);
+    }
+
+    /**
+     * Delete project.
+     * 
+     * @param  mixed  $project_id
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
+     */
+    public function destroy($project_id)
+    {
+        // Get project
+        $project = Project::find($project_id);
+        //------------
+
+        if (! is_null($project) && $project->delete()) {
+            // Set response
+            $response = [
+                'status'  => true,
+                'message' => 'Project deleted.'
+            ];
+            //-------------
+        } else {
+            // Set response
+            $response = [
+                'status'  => false,
+                'message' => 'Unable to delete project, Please try again!'
+            ];
+            //-------------
+        }
 
         return response()->json($response, 200);
     }

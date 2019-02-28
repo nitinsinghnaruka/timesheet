@@ -27,6 +27,10 @@
                 <div class="text-right">
                   <button type="submit" class="btn btn-success shadow-sm" :disabled="loading" v-text="loading ? 'Logging in...' : 'Login'"></button>
                 </div>
+                <div class="text-center mt-3">
+                  <div class="text-muted">or</div>
+                  <router-link to="register" class="create-account-link">Create an account</router-link>
+                </div>
 
               </form>
               <!--/ Form -->
@@ -48,8 +52,8 @@ export default {
       loading: false,
       errorMessage: null,
       form: new Form({
-        email: '',
-        password: ''
+        email: null,
+        password: null
       })
     } 
   },
@@ -65,24 +69,31 @@ export default {
           let data = response.data;
 
           if (data.status == true) {
-            // Store auth data.
+            // Store auth data
             Auth.store(data.token, data.user);
+            //----------------
 
-            // Store login user state.
+            // Store login user state
             store.commit('loginUser');
+            //-----------------------
 
-            // Redirect to home.
+            // Redirect to home
             this.$router.push('/');
+            //-----------------
           } else {
-            this.errorMessage = data.message;
+            // Show message
+            this.$showToast('error', data.message);
+            //-------------
           }
       
-          // Hide loading.
+          // Hide loading
           this.loading = false;
+          //-------------
         })
         .catch((error) => {
-          // Hide loading.
+          // Hide loading
           this.loading = false;
+          //-------------
         });
     }
   }  
@@ -124,5 +135,9 @@ export default {
 .login .form .form-control:focus {
   outline: none;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+.login .create-account-link {
+  color: dimgrey;
 }
 </style>

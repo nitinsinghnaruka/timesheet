@@ -30,6 +30,14 @@ class User extends Authenticatable
     ];
 
     /**
+     * Oauth Access Token.
+     */
+    public function OauthAccessToken()
+    {
+        return $this->hasMany('\App\OauthAccessToken');
+    }
+
+    /**
      * Get the projects.
      */
     public function projects()

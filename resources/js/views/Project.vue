@@ -26,8 +26,8 @@
                   <h5 class="card-title"><span class="ti-tag"></span> {{ project.name }}</h5>
                   <p class="card-text ml-1" v-if="project.description">{{ project.description }}</p>
                   <div class="mt-3 actions">
-                    <a href="#" class="text-primary"><span class="ti-write"></span> Edit</a>
-                    <a href="#" class="text-danger" v-if="$isEmpty(project.task_lists)"><span class="ti-trash"></span> Delete</a>
+                    <a href="#" class="text-primary" @click.prevent="$eventBus.$emit('editProject', project)"><span class="ti-write"></span> Edit</a>
+                    <a href="#" class="text-danger" v-if="$isEmpty(project.task_lists)" @click.prevent="deleteProject(project.id)"><span class="ti-trash"></span> Delete</a>
                   </div>
                   </div>
                 </div>
@@ -38,7 +38,7 @@
             <!-- Task List -->
             <div class="row">
               <div class="col-md-12">
-                <task-list :task-lists="taskLists"></task-list>
+                <task-list :task-lists="project.task_lists"></task-list>
               </div>
             </div>
             <!--/ Task List -->
@@ -58,9 +58,9 @@
 
     </base-layout>
 
-    <!-- Add project -->
-    <!-- <add-project></add-project> -->
-    <!--/ Add project -->
+    <!-- Edit project modal -->
+    <edit-project-modal></edit-project-modal>
+    <!--/ Edit project modal -->
 
   </div>
 
@@ -69,17 +69,18 @@
 <script>
 import BaseLayout from './BaseLayout.vue';
 import TaskList from '../components/TaskList.vue';
+import EditProjectModal from '../components/EditProjectModal.vue';
 
 export default {
   components: {
     BaseLayout,
-    TaskList
+    TaskList,
+    EditProjectModal
   },
   data () {
     return {
       loading: false,
-      project: null,
-      taskLists: []
+      project: null
     }
   },
   methods: {
@@ -97,8 +98,7 @@ export default {
 
         // Set project
         if (data.status == true) {
-          this.project   = data.project;
-          this.taskLists = data.project.task_lists;
+          this.project = data.project;
         }
         //-------------
 
@@ -114,18 +114,67 @@ export default {
     },
 
     /**
-     * Set project.
+     * Update project.
      * 
      * @param {object}  project
      */
-    setProject (project) {
-      this.projects.unshift(project);
+    updateProject (project) {
+      // Get project task lists
+      let taskLists = this.project.task_lists;
+      //-----------------------
+
+      // Update project
+      this.project = project;
+      //---------------
+
+      // Reset task lists
+      this.project.task_lists = taskLists;
+      //-----------------
+    },
+
+    /**
+     * Delete project.
+     * 
+     * @param {integer}  projectId
+     */
+    deleteProject (projectId) {
+      // Show loading
+      this.loading = true;
+      //-------------
+
+      axios.delete(`projects/${projectId}`)
+        .then((response) => {
+          let data = response.data;
+
+          if (data.status == true) {
+            // Go to project
+            this.$router.push('/projects');
+            //--------------
+
+            // Show message
+            this.$showToast('success', 'Project deleted, Redirected you to projects page.');
+            //-------------
+          } else {
+            // Show message
+            this.$showToast('error', data.message);
+            //-------------
+          }
+
+          // Hide loading
+          this.loading = false;
+          //-------------
+        })
+        .catch((error) => {
+          // Hide loading
+          this.loading = false;
+          //-------------
+        });
     }
   },
   created () {
-    // Listen to project stored event
-    this.$eventBus.$on('projectStored', (project) => this.setProject(project));
-    //-------------------------------
+    // Listen to project updated event
+    this.$eventBus.$on('projectUpdated', (project) => this.updateProject(project));
+    //--------------------------------
   },
   mounted () {
     // Get project

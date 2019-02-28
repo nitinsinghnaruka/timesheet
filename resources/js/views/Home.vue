@@ -16,7 +16,7 @@
                   </div>
                   <div class="float-left ml-2 mt-1">
                     <div class="user-name">{{ $store.state.auth.user.name }}</div>
-                    <a href="#" class="text-muted logout" @click.prevent="">Logout</a>
+                    <a href="#" class="text-muted logout" @click.prevent="$eventBus.$emit('logout')">Logout</a>
                   </div>
                   <div class="clearfix"></div>
                 </div>

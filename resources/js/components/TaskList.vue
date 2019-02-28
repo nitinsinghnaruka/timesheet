@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="task-lists">
 
     <!-- Heading -->
     <div class="row mt-2 mb-4">
@@ -16,8 +16,8 @@
 
         <div class="card-header bg-white shadow-sm">
           <h5 class="mb-0">
-            <button class="btn btn-link font-weight-bold text-success" type="button" data-toggle="collapse" :data-target="'#collapse' + index" @click="toggleTasksVisibility(taskList.id)">
-              #{{ taskList.name }}
+            <button class="btn btn-link font-weight-bold text-success btn-toggle-task-list" type="button" data-toggle="collapse" :data-target="'#collapse' + index" @click="toggleTasksVisibility(taskList.id)">
+              <span :class="tasksIsActive(taskList.id) ? 'ti-arrow-down' : 'ti-arrow-right'"></span> {{ taskList.name }}
             </button>
           </h5>
         </div>
@@ -77,9 +77,15 @@ export default {
         return value === taskListID;
       });
       //-----------------------------------------
-     
+          
       if (isTasksVisible.length == 0) {
+        // Add to active tasks
         this.activeTasks.push(taskListID);
+        //--------------------
+      } else {
+        // Delete from active tasks
+        Vue.delete(this.activeTasks, this.activeTasks.indexOf(taskListID));
+        //-------------------------
       }
     },
 
@@ -127,3 +133,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.task-lists .btn-toggle-task-list:hover, .task-lists .btn-toggle-task-list:focus .task-lists .btn-toggle-task-list:active {
+  text-decoration: unset;
+}
+</style>

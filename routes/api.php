@@ -13,13 +13,22 @@ use Illuminate\Http\Request;
 |
 */
 
+// Authentication
 Route::post('login', 'API\Auth\LoginController@authenticate');
+Route::post('logout', 'API\Auth\LoginController@logout');
+//---------------
+
+// Registration
+Route::post('register', 'API\Auth\RegisterController@create');
+//-------------
 
 // Projects
 Route::group(['prefix' => 'projects'], function () {
     Route::get('/', 'API\ProjectController@index');
     Route::post('/', 'API\ProjectController@store');
     Route::get('/{project_id}', 'API\ProjectController@show');
+    Route::put('/{project_id}', 'API\ProjectController@update');
+    Route::delete('/{project_id}', 'API\ProjectController@destroy');
 });
 //---------
 

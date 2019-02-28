@@ -9,7 +9,7 @@
             <modal-loader :show="loading"></modal-loader>
 
             <div class="modal-header shadow-sm">
-              <h5 class="modal-title">Add Project</h5>
+              <h5 class="modal-title"><span class="ti-plus"></span> Add Project</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true"><span class="ti-close"></span></span>
               </button>
@@ -73,15 +73,21 @@ export default {
           let data = response.data;
 
           if (data.status == true) {
-            let project = data.project;
-
             // Emit project stored event
-            this.$eventBus.$emit('projectStored', project);
+            this.$eventBus.$emit('projectStored', data.project);
             //--------------------------
 
             // Hide modal
             $(this.$refs.addProjectModal).modal('hide');
             //-----------
+
+            // Show message
+            this.$showToast('success', data.message);
+            //-------------
+          } else {
+            // Show message
+            this.$showToast('error', data.message);
+            //-------------
           }
 
           // Hide loading

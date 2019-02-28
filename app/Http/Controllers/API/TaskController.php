@@ -11,6 +11,16 @@ use Illuminate\Support\Carbon;
 class TaskController extends Controller
 {
     /**
+     * Create a controller instance.
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+    
+    /**
      * Get tasks.
      * 
      * @param  integer  $task_list_id
@@ -18,7 +28,6 @@ class TaskController extends Controller
      */
     public function index($task_list_id)
     {
-        dd(1);
         // Get tasks
         $tasks = Task::orderBy('id', 'desc')->get();
         //----------

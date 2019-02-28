@@ -26,7 +26,7 @@
             <img :src="$appURL + 'images/user.png'" alt="" width="40">
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Logout</a>
+            <a class="dropdown-item" href="#" @click.prevent="$eventBus.$emit('logout')">Logout</a>
           </div>
         </div>
       </template>
