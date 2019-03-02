@@ -1,5 +1,7 @@
 <template>
   <div>
+    <ajax-loader :show="showLoader"></ajax-loader>
+
     <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-light">
       <router-link to="/" tag="a" class="navbar-brand pt-1">Timesheet</router-link>
@@ -45,7 +47,16 @@
 </template>
 
 <script>
+import AjaxLoader from '../components/AjaxLoader';
+
 export default {
-  //
+  components: {
+    AjaxLoader
+  },
+  data () {
+    return {
+      showLoader: false
+    }
+  }
 }
 </script>

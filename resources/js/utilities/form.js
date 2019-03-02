@@ -6,7 +6,7 @@ class Form {
    *
    * @param {object} data
    */
-  constructor(data) {
+  constructor (data) {
     this.originalData = data;
   
     for (let field in data) {
@@ -19,7 +19,7 @@ class Form {
   /**
    * Fetch all relevant data for the form.
    */
-  data() {
+  data () {
     let data = {};
 
     for (let property in this.originalData) {
@@ -32,7 +32,7 @@ class Form {
   /**
    * Reset the form fields.
    */
-  reset() {
+  reset () {
     for (let field in this.originalData) {
       this[field] = '';
     }
@@ -45,7 +45,7 @@ class Form {
    * 
    * @param {string} url
    */
-  post(url) {
+  post (url) {
     return this.submit('post', url);
   }
 
@@ -54,7 +54,7 @@ class Form {
    * 
    * @param {string} url
    */
-  put(url) {
+  put (url) {
     return this.submit('put', url);
   }
 
@@ -63,7 +63,7 @@ class Form {
    * 
    * @param {string} url
    */
-  patch(url) {
+  patch (url) {
     return this.submit('patch', url);
   }
 
@@ -72,7 +72,7 @@ class Form {
    * 
    * @param {string} url
    */
-  delete(url) {
+  delete (url) {
     return this.submit('delete', url);
   }
 
@@ -82,7 +82,7 @@ class Form {
    * @param {string} requestType
    * @param {string} url
    */
-  submit(requestType, url) {
+  submit (requestType, url) {
     return new Promise((resolve, reject) => {
       axios[requestType](url, this.data())
         .then(response => {
@@ -105,7 +105,7 @@ class Form {
    *
    * @param {object} data
    */
-  onSuccess(data) {
+  onSuccess (data) {
     this.reset();
   }
 
@@ -114,7 +114,7 @@ class Form {
    *
    * @param {object} errors
    */
-  onFail(errors) {
+  onFail (errors) {
     this.errors.record(errors);
   }
 }

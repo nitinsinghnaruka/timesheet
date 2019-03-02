@@ -95,7 +95,9 @@ class ProjectController extends Controller
     public function show($project_id)
     {
         // Get project
-        $project = Project::with('task_lists.tasks')->where([
+        $project = Project::with(['task_lists' => function ($query) {
+            $query->orderBy('task_lists.id', 'desc');
+        }])->where([
             'id'      => $project_id,
             'user_id' => auth_user('api')->id
         ])->first();

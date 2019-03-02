@@ -13,12 +13,23 @@
     <div class="accordion" v-if="! $isEmpty(taskLists)">
 
       <div class="card border-0 shadow-sm mb-4" v-for="(taskList, index) in taskLists" :key="taskList.id">
-
         <div class="card-header bg-white shadow-sm">
           <h5 class="mb-0">
-            <button class="btn btn-link font-weight-bold text-success btn-toggle-task-list" type="button" data-toggle="collapse" :data-target="'#collapse' + index" @click="toggleTasksVisibility(taskList.id)">
-              <span :class="tasksIsActive(taskList.id) ? 'ti-arrow-down' : 'ti-arrow-right'"></span> {{ taskList.name }}
-            </button>
+            <div class="row">
+              <div class="col-md-10">
+                <button class="btn btn-link font-weight-bold text-success btn-toggle-task-list" type="button" data-toggle="collapse" :data-target="'#collapse' + index" @click="toggleTasksVisibility(taskList.id)">
+                  <span :class="tasksIsActive(taskList.id) ? 'ti-arrow-down' : 'ti-arrow-right'"></span> {{ taskList.name }}
+                </button>
+              </div>
+              <div class="col-md-2">
+                <!-- Actions -->
+                <div class="actions">
+                  <a href="#" @click.prevent="$eventBus.$emit('editTaskList', taskList)"><span class="ti-write"></span></a>
+                  <a href="#" @click.prevent="deleteTaskList(taskList.id)"><span class="ti-trash text-danger"></span></a>
+                </div>
+                <!--/ Actions -->
+              </div>
+            </div>
           </h5>
         </div>
 
@@ -129,13 +140,68 @@ export default {
         .catch((error) => {
 
         });
+    },
+
+    /**
+     * Set task list.
+     * 
+     * @param {object}  taskList
+     */
+    setTaskList (taskList) {
+      this.taskLists.unshift(taskList);
+    },
+
+    /**
+     * Delete task list.
+     * 
+     * @param {integer}  taskListId
+     */
+    deleteTaskList (taskListId) {
+      this.showLoader = true;
+      
+      this.$showToast('question', 'Are you sure to delete?', {}, (status) => {
+        if (status == true) {
+          return false;
+          axios.delete(`task-lists/${taskListId}`)
+            .then((response) => {
+              let data = response.data;
+
+              if (data.status) {
+
+              } else {
+
+              }
+            })
+            .catch((error) => {
+              //
+            });
+        }
+      });
     }
+  },
+  created () {
+    // Listen to task list stored event
+    this.$eventBus.$on('taskListStored', (taskList) => this.setTaskList(taskList));
+    //---------------------------------
   }
 }
 </script>
 
 <style scoped>
-.task-lists .btn-toggle-task-list:hover, .task-lists .btn-toggle-task-list:focus .task-lists .btn-toggle-task-list:active {
-  text-decoration: unset;
+.task-lists .btn-toggle-task-list:hover, .task-lists .btn-toggle-task-list:focus, .task-lists .btn-toggle-task-list:active {
+  text-decoration: none;
+}
+
+.task-lists .actions {
+  margin-top: 8px;
+  text-align: right;
+}
+
+.task-lists .actions a {
+  font-size: 14px;
+}
+
+.task-lists .actions a:hover, .task-lists .actions a:focus, .task-lists .actions a:active {
+  text-decoration: none;
 }
 </style>
