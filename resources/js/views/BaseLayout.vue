@@ -47,11 +47,9 @@
 </template>
 
 <script>
-import AjaxLoader from '../components/AjaxLoader';
-
 export default {
   components: {
-    AjaxLoader
+    AjaxLoader: require('../components/AjaxLoader')
   },
   data () {
     return {

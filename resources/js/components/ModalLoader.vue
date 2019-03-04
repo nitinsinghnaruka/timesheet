@@ -3,8 +3,6 @@
 </template>
 
 <script>
-import VueElementLoading from 'vue-element-loading';
-
 export default {
   props: {
     show: {
@@ -13,7 +11,7 @@ export default {
     }
   },
   components: {
-    VueElementLoading
+    VueElementLoading: require('vue-element-loading')
   }
 }
 </script>

@@ -73,13 +73,10 @@
 </template>
 
 <script>
-import BaseLayout from './BaseLayout.vue';
-import AddTask from '../components/AddTask.vue';
-
 export default {
   components: {
-    BaseLayout,
-    AddTask
+    BaseLayout: require('./BaseLayout.vue'),
+    AddTask: require('../components/AddTask.vue')
   },
   data () {
     return {

@@ -84,19 +84,13 @@
 </template>
 
 <script>
-import BaseLayout from './BaseLayout.vue';
-import TaskList from '../components/TaskList.vue';
-import EditProjectModal from '../components/EditProjectModal.vue';
-import AddTaskListModal from '../components/AddTaskListModal.vue';
-import EditTaskListModal from '../components/EditTaskListModal.vue';
-
 export default {
   components: {
-    BaseLayout,
-    TaskList,
-    EditProjectModal,
-    AddTaskListModal,
-    EditTaskListModal
+    BaseLayout: require('./BaseLayout.vue'),
+    TaskList: require('../components/TaskList.vue'),
+    EditProjectModal: require('../components/EditProjectModal.vue'),
+    AddTaskListModal: require('../components/AddTaskListModal.vue'),
+    EditTaskListModal: require('../components/EditTaskListModal.vue')
   },
   data () {
     return {

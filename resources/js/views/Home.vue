@@ -39,17 +39,11 @@
 </template>
 
 <script>
-import BaseLayout from './BaseLayout.vue';
-import AppTime from '../components/AppTime.vue';
-import AddCurrentTask from '../components/AddCurrentTask.vue';
-import AppCalculateTime from '../components/AppCalculateTime.vue';
-
 export default {
   components: {
-    BaseLayout,
-    AppTime,
-    AddCurrentTask,
-    AppCalculateTime,
+    BaseLayout: require('./BaseLayout.vue'),
+    AppTime: require('../components/AppTime.vue'),
+    AppCalculateTime: require('../components/AppCalculateTime.vue')
   } 
 }
 </script>

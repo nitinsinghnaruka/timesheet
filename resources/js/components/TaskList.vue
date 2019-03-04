@@ -67,14 +67,14 @@ export default {
       required: true
     }
   },
+  components: {
+    Tasks: require('./Tasks.vue')
+  },
   data () {
     return {
       loading: false,
       activeTasks: []
     }
-  },
-  components: {
-    Tasks
   },
   methods: {
     /**

@@ -56,13 +56,10 @@
 </template>
 
 <script>
-import BaseLayout from './BaseLayout.vue';
-import AddProjectModal from '../components/AddProjectModal.vue';
-
 export default {
   components: {
-    BaseLayout,
-    AddProjectModal
+    BaseLayout: require('./BaseLayout.vue'),
+    AddProjectModal: require('../components/AddProjectModal.vue')
   },
   data () {
     return {
