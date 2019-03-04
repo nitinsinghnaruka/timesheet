@@ -38,7 +38,7 @@
             <loader :show="loading"></loader>
             
             <!-- Tasks -->
-            <tasks :tasks="taskList.tasks"></tasks>
+            <tasks :tasks="! $isEmpty(taskList.tasks) ? taskList.tasks : []"></tasks>
             <!--/ Tasks -->
 
           </div>
@@ -165,15 +165,31 @@ export default {
             .then((response) => {
               let data = response.data;
 
-              if (data.status == true) {
-
-              } else {
-
-              }
-
               // Hide loader
               this.$root.showLoader = false;
               //------------
+
+              if (data.status == true) {
+                // Find task list in task lists
+                this.taskLists.find((_taskList, key) => {
+                  if (_taskList.id == taskListId) {
+                    // Update task lists
+                    Vue.delete(this.taskLists, key);
+                    //------------------
+
+                    return true;
+                  }
+                });
+                //-----------------------------
+
+                // Show message
+                this.$showToast('success', data.message);
+                //-------------
+              } else {
+                // Show message
+                this.$showToast('error', data.message);
+                //-------------
+              }
             })
             .catch((error) => {
               // Hide loader

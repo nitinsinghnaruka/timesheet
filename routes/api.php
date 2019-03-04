@@ -36,6 +36,7 @@ Route::group(['prefix' => 'projects'], function () {
 Route::group(['prefix' => 'task-lists'], function () {
     Route::post('/{project_id}', 'API\TaskListController@store');
     Route::put('/{task_list_id}', 'API\TaskListController@update');
+    Route::delete('/{task_list_id}', 'API\TaskListController@destroy');
 });
 //-----------
 

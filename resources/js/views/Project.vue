@@ -153,37 +153,41 @@ export default {
      * @param {integer}  projectId
      */
     deleteProject (projectId) {
-      // Show loading
-      this.loading = true;
-      //-------------
+      this.$showToast('question', 'Are you sure to delete?', {}, (status) => {
+        if (status == true) {
+          // Show loader
+          this.$root.showLoader = true;
+          //------------
 
-      axios.delete(`projects/${projectId}`)
-        .then((response) => {
-          let data = response.data;
+          axios.delete(`projects/${projectId}`)
+            .then((response) => {
+              let data = response.data;
 
-          if (data.status == true) {
-            // Go to project
-            this.$router.push('/projects');
-            //--------------
+              if (data.status == true) {
+                // Go to project
+                this.$router.push('/projects');
+                //--------------
 
-            // Show message
-            this.$showToast('success', 'Project deleted, Redirected you to projects page.');
-            //-------------
-          } else {
-            // Show message
-            this.$showToast('error', data.message);
-            //-------------
-          }
+                // Show message
+                this.$showToast('success', 'Project deleted, Redirected you to projects page.');
+                //-------------
+              } else {
+                // Show message
+                this.$showToast('error', data.message);
+                //-------------
+              }
 
-          // Hide loading
-          this.loading = false;
-          //-------------
-        })
-        .catch((error) => {
-          // Hide loading
-          this.loading = false;
-          //-------------
-        });
+              // Hide loader
+              this.$root.showLoader = false;
+              //------------
+            })
+            .catch((error) => {
+              // Hide loader
+              this.$root.showLoader = false;
+              //------------
+            });
+        }
+      });
     },
 
     /**

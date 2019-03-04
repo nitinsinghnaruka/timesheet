@@ -89,4 +89,35 @@ class TaskListController extends Controller
 
         return response()->json($response, 200);
     }
+
+    /**
+     * Delete task list.
+     * 
+     * @param  mixed  $task_list_id
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
+     */
+    public function destroy($task_list_id)
+    {
+        // Get task list
+        $task_list = TaskList::find($task_list_id);
+        //--------------
+
+        if (! is_null($task_list) && $task_list->delete()) {
+            // Set response
+            $response = [
+                'status'  => true,
+                'message' => 'Task list deleted.'
+            ];
+            //-------------
+        } else {
+            // Set response
+            $response = [
+                'status'  => false,
+                'message' => 'Unable to delete task list, Please try again!'
+            ];
+            //-------------
+        }
+
+        return response()->json($response, 200);
+    }
 }
