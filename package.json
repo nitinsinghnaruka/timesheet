@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "moment": "^2.24.0",
+        "v-tooltip": "^2.0.0-rc.33",
         "vue-element-loading": "^1.1.1",
         "vue-izitoast": "^1.1.2",
         "vue-router": "^3.0.2",

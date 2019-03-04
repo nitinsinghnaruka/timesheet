@@ -29,7 +29,7 @@ class TaskController extends Controller
     public function index($task_list_id)
     {
         // Get tasks
-        $tasks = Task::orderBy('id', 'desc')->get();
+        $tasks = Task::where('task_list_id', $task_list_id)->orderBy('id', 'desc')->get();
         //----------
 
         // Set response
@@ -43,7 +43,7 @@ class TaskController extends Controller
             $response = [
                 'status'  => false,
                 'message' => 'Tasks not found.',
-                'task'    => null
+                'tasks'   => null
             ];
         }
         //-------------

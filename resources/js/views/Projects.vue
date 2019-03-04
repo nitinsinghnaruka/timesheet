@@ -6,7 +6,7 @@
         <div class="row justify-content-center mb-4">
           <div class="col-md-8">
             <div class="border-bottom pb-3 text-right">
-              <a href="#" @click.prevent="$eventBus.$emit('addProject')"><span class="ti-plus"></span> Add Project</a>
+              <a href="" @click.prevent="$eventBus.$emit('addProject')"><span class="ti-plus"></span> Add Project</a>
             </div>
           </div>
         </div>

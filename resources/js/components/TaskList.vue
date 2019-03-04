@@ -24,8 +24,8 @@
               <div class="col-md-2">
                 <!-- Actions -->
                 <div class="actions">
-                  <a href="#" @click.prevent="$eventBus.$emit('editTaskList', taskList)"><span class="ti-write"></span></a>
-                  <a href="#" @click.prevent="deleteTaskList(taskList.id)"><span class="ti-trash text-danger"></span></a>
+                  <a href="" @click.prevent="$eventBus.$emit('editTaskList', taskList)" v-tooltip="'Edit Task List'"><span class="ti-write"></span></a>
+                  <a href="" @click.prevent="deleteTaskList(taskList.id)" v-tooltip="'Delete Task List'"><span class="ti-trash text-danger"></span></a>
                 </div>
                 <!--/ Actions -->
               </div>
@@ -78,22 +78,26 @@ export default {
     /**
      * Toggle tasks visiblity.
      * 
-     * @param {integer}  taskListID
+     * @param {integer}  taskListId
      */
-    toggleTasksVisibility (taskListID) {
+    toggleTasksVisibility (taskListId) {
       // Check task list's task is visible or not
       let isTasksVisible = this.activeTasks.filter((value) => {
-        return value === taskListID;
+        return value === taskListId;
       });
       //-----------------------------------------
           
       if (isTasksVisible.length == 0) {
         // Add to active tasks
-        this.activeTasks.push(taskListID);
+        this.activeTasks.push(taskListId);
         //--------------------
+
+        // Show task list's tasks
+        this.showTasks(taskListId);
+        //----------------------- 
       } else {
         // Delete from active tasks
-        Vue.delete(this.activeTasks, this.activeTasks.indexOf(taskListID));
+        Vue.delete(this.activeTasks, this.activeTasks.indexOf(taskListId));
         //-------------------------
       }
     },
@@ -101,14 +105,14 @@ export default {
     /**
      * Tasks is active.
      * 
-     * @param {integer}  taskListID
+     * @param {integer}  taskListId
      */
-    tasksIsActive (taskListID) {
+    tasksIsActive (taskListId) {
       let visible = false;
 
       // Check task list's task is visible or not
       let isTasksVisible = this.activeTasks.filter((value) => {
-        return value === taskListID;
+        return value === taskListId;
       });
       //-----------------------------------------
 
@@ -119,25 +123,6 @@ export default {
       //------------------
 
       return visible;
-    },
-
-    /**
-     * Get tasks.
-     * 
-     * @param {integer}  taskListID
-     */
-    getTasks (taskListID) {
-      // Show loading
-      this.loading = true;
-      //-------------
-
-      axios.get(`tasks/${taskListID}`)
-        .then((response) => {
-
-        })
-        .catch((error) => {
-
-        });
     },
 
     /**
@@ -198,6 +183,47 @@ export default {
             });
         }
       });
+    },
+
+    /**
+     * Show tasks.
+     * 
+     * @param {integer}  taskListId
+     */
+    showTasks (taskListId) {
+      // Get task list of given id
+      let taskList = this.taskLists.find((_taskList) => _taskList.id === taskListId);
+      //--------------------------
+
+      // Get tasks
+      if (this.$isEmpty(taskList.tasks)) {
+        // Show loading
+        this.loading = true;
+        //-------------
+
+        axios.get(`tasks/${taskListId}`)
+          .then((response) => {
+            let data = response.data;
+
+            // Set tasks to task list
+            taskList.tasks = data.tasks;
+            //-----------------------
+
+            // Emit task list updated event
+            this.$eventBus.$emit('taskListUpdated', taskList);
+            //-----------------------------
+
+            // Hide loading
+            this.loading = false;
+            //-------------
+          })
+          .catch((error) => {
+            // Hide loading
+            this.loading = false;
+            //-------------
+          });
+      }
+      //----------
     }
   },
   created () {

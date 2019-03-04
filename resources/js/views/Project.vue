@@ -21,24 +21,24 @@
             <!-- Project detail -->
             <div class="row">
               <div class="col-md-12">
-                <div class="card mb-3">
+                <div class="card border-0 shadow-sm mb-4">
                   <div class="card-body">
                   <h5 class="card-title">
                     <div class="row">
                       <div class="col-md-10">
-                        <span class="ti-tag"></span> {{ project.name }}
+                        <span class="ti-bookmark-alt"></span> {{ project.name }}
                       </div>
                       <div class="col-md-2">
                         <!-- Actions -->
                         <div class="actions">
-                          <a href="#" class="text-primary" @click.prevent="$eventBus.$emit('editProject', project)"><span class="ti-write"></span></a>
-                          <a href="#" class="text-danger" v-if="$isEmpty(project.task_lists)" @click.prevent="deleteProject(project.id)"><span class="ti-trash"></span></a>
+                          <a href="" class="text-primary" @click.prevent="$eventBus.$emit('editProject', project)" v-tooltip="'Edit Project'"><span class="ti-write"></span></a>
+                          <a href="" class="text-danger" v-if="$isEmpty(project.task_lists)" @click.prevent="deleteProject(project.id)" v-tooltip="'Delete Project'"><span class="ti-trash"></span></a>
                         </div>
                         <!--/ Actions -->
                       </div>
                     </div>
                   </h5>
-                  <p class="card-text ml-1" v-if="project.description">{{ project.description }}</p>
+                  <p class="card-text ml-4" v-if="project.description">{{ project.description }}</p>
                   </div>
                 </div>
               </div>
@@ -79,6 +79,10 @@
     <!-- Edit task list modal -->
     <edit-task-list-modal></edit-task-list-modal>
     <!--/ Edit task list modal -->
+
+    <!-- Task detail modal -->
+    <task-detail-modal></task-detail-modal>
+    <!--/ Task detail modal -->
   </div>
 
 </template>
@@ -90,7 +94,8 @@ export default {
     TaskList: require('../components/TaskList.vue').default,
     EditProjectModal: require('../components/EditProjectModal.vue').default,
     AddTaskListModal: require('../components/AddTaskListModal.vue').default,
-    EditTaskListModal: require('../components/EditTaskListModal.vue').default
+    EditTaskListModal: require('../components/EditTaskListModal.vue').default,
+    TaskDetailModal: require('../components/TaskDetailModal.vue').default
   },
   data () {
     return {
