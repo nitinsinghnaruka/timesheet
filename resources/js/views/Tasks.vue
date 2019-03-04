@@ -75,8 +75,8 @@
 <script>
 export default {
   components: {
-    BaseLayout: require('./BaseLayout.vue'),
-    AddTask: require('../components/AddTask.vue')
+    BaseLayout: require('./BaseLayout.vue').default,
+    AddTask: require('../components/AddTask.vue').default
   },
   data () {
     return {

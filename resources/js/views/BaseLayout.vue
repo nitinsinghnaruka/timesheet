@@ -49,7 +49,7 @@
 <script>
 export default {
   components: {
-    AjaxLoader: require('../components/AjaxLoader')
+    AjaxLoader: require('../components/AjaxLoader').default
   },
   data () {
     return {

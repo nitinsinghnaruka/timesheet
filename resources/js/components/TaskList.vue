@@ -58,8 +58,6 @@
 </template>
 
 <script>
-import Tasks from './Tasks.vue';
-
 export default {
   props: {
     taskLists: {
@@ -68,7 +66,7 @@ export default {
     }
   },
   components: {
-    Tasks: require('./Tasks.vue')
+    Tasks: require('./Tasks.vue').default
   },
   data () {
     return {

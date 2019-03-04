@@ -36,7 +36,7 @@
 <script>
 export default {
   components: {
-    AppTime: require('../components/AppTime')
+    AppTime: require('../components/AppTime').default
   },
   data () {
     return {

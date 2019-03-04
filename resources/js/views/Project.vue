@@ -86,11 +86,11 @@
 <script>
 export default {
   components: {
-    BaseLayout: require('./BaseLayout.vue'),
-    TaskList: require('../components/TaskList.vue'),
-    EditProjectModal: require('../components/EditProjectModal.vue'),
-    AddTaskListModal: require('../components/AddTaskListModal.vue'),
-    EditTaskListModal: require('../components/EditTaskListModal.vue')
+    BaseLayout: require('./BaseLayout.vue').default,
+    TaskList: require('../components/TaskList.vue').default,
+    EditProjectModal: require('../components/EditProjectModal.vue').default,
+    AddTaskListModal: require('../components/AddTaskListModal.vue').default,
+    EditTaskListModal: require('../components/EditTaskListModal.vue').default
   },
   data () {
     return {

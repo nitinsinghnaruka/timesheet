@@ -41,9 +41,9 @@
 <script>
 export default {
   components: {
-    BaseLayout: require('./BaseLayout.vue'),
-    AppTime: require('../components/AppTime.vue'),
-    AppCalculateTime: require('../components/AppCalculateTime.vue')
+    BaseLayout: require('./BaseLayout.vue').default,
+    AppTime: require('../components/AppTime.vue').default,
+    AppCalculateTime: require('../components/AppCalculateTime.vue').default
   } 
 }
 </script>

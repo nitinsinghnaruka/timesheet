@@ -58,8 +58,8 @@
 <script>
 export default {
   components: {
-    BaseLayout: require('./BaseLayout.vue'),
-    AddProjectModal: require('../components/AddProjectModal.vue')
+    BaseLayout: require('./BaseLayout.vue').default,
+    AddProjectModal: require('../components/AddProjectModal.vue').default
   },
   data () {
     return {
