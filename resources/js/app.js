@@ -10,6 +10,11 @@ new Vue({
   components: {
     App: require('./views/App').default
   },
+  data () {
+    return {
+      showLoader: false
+    }
+  },
   router,
   store,
   methods: {

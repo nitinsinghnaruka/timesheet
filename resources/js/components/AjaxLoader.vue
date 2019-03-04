@@ -1,5 +1,5 @@
 <template>
-  <div id="snackbar" :class="show ? 'show' : ''">Loading...</div>
+  <div id="snackbar" :class="show ? 'show' : ''"><span class="ti-reload icon"></span> Loading...</div>
 </template>
 
 <script>
@@ -35,8 +35,16 @@ export default {
   visibility: visible; /* Show the snackbar */
   /* Add animation: Take 0.5 seconds to fade in and out the snackbar. 
   However, delay the fade out process for 2.5 seconds */
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  -webkit-animation: fadein 0.3s;
+  animation: fadein 0.3s;
+}
+
+#snackbar.show .icon {
+  position: absolute;
+  top: 20px;
+  left: 70px;
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
 }
 
 /* Animations to fade the snackbar in and out */
@@ -58,5 +66,10 @@ export default {
 @keyframes fadeout {
   from {bottom: 30px; opacity: 1;}
   to {bottom: 0; opacity: 0;}
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 </style>

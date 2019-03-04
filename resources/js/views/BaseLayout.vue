@@ -55,8 +55,16 @@ export default {
   },
   data () {
     return {
-      showLoader: false
+      //
     }
+  },
+  computed: {
+    /**
+     * Show loader.
+     */
+    showLoader () {
+      return this.$root.showLoader;
+    } 
   }
 }
 </script>

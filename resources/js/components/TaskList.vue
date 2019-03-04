@@ -156,24 +156,31 @@ export default {
      * 
      * @param {integer}  taskListId
      */
-    deleteTaskList (taskListId) {
-      this.showLoader = true;
-      
+    deleteTaskList (taskListId) {      
       this.$showToast('question', 'Are you sure to delete?', {}, (status) => {
         if (status == true) {
-          return false;
+          // Show loader
+          this.$root.showLoader = true;
+          //------------
+
           axios.delete(`task-lists/${taskListId}`)
             .then((response) => {
               let data = response.data;
 
-              if (data.status) {
+              if (data.status == true) {
 
               } else {
 
               }
+
+              // Hide loader
+              this.$root.showLoader = false;
+              //------------
             })
             .catch((error) => {
-              //
+              // Hide loader
+              this.$root.showLoader = false;
+              //------------
             });
         }
       });
