@@ -27,11 +27,6 @@
             </div>
 
         </div>
-        <div class="col-md-4">
-            <!-- Calculate Time -->
-            <app-calculate-time></app-calculate-time>
-            <!--/ Calculate Time -->
-        </div>
       </div>
     </div>
 
@@ -42,8 +37,7 @@
 export default {
   components: {
     BaseLayout: require('./BaseLayout.vue').default,
-    AppTime: require('../components/AppTime.vue').default,
-    AppCalculateTime: require('../components/AppCalculateTime.vue').default
+    AppTime: require('../components/AppTime.vue').default
   } 
 }
 </script>

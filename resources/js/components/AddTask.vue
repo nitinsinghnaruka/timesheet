@@ -40,7 +40,6 @@
     <!--/ Add task modal -->
 
   </div>
-
 </template>
 
 <script>
