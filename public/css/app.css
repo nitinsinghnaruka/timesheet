@@ -10281,3 +10281,7 @@ body {
   display: none;
 }
 
+.navbar {
+  min-height: 88px;
+}
+
