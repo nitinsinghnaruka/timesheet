@@ -13,12 +13,23 @@
     <div class="accordion" v-if="! $isEmpty(taskLists)">
 
       <div class="card border-0 shadow-sm mb-4" v-for="(taskList, index) in taskLists" :key="taskList.id">
-
         <div class="card-header bg-white shadow-sm">
           <h5 class="mb-0">
-            <button class="btn btn-link font-weight-bold text-success btn-toggle-task-list" type="button" data-toggle="collapse" :data-target="'#collapse' + index" @click="toggleTasksVisibility(taskList.id)">
-              <span :class="tasksIsActive(taskList.id) ? 'ti-arrow-down' : 'ti-arrow-right'"></span> {{ taskList.name }}
-            </button>
+            <div class="row">
+              <div class="col-md-10">
+                <button class="btn btn-link font-weight-bold text-success btn-toggle-task-list" type="button" data-toggle="collapse" :data-target="'#collapse' + index" @click="toggleTasksVisibility(taskList.id)">
+                  <span :class="tasksIsActive(taskList.id) ? 'ti-arrow-down' : 'ti-arrow-right'"></span> {{ taskList.name }}
+                </button>
+              </div>
+              <div class="col-md-2">
+                <!-- Actions -->
+                <div class="actions">
+                  <a href="" @click.prevent="$eventBus.$emit('editTaskList', taskList)" v-tooltip="'Edit Task List'"><span class="ti-write"></span></a>
+                  <a href="" @click.prevent="deleteTaskList(taskList.id)" v-tooltip="'Delete Task List'"><span class="ti-trash text-danger"></span></a>
+                </div>
+                <!--/ Actions -->
+              </div>
+            </div>
           </h5>
         </div>
 
@@ -27,7 +38,7 @@
             <loader :show="loading"></loader>
             
             <!-- Tasks -->
-            <tasks :tasks="taskList.tasks"></tasks>
+            <tasks :tasks="! $isEmpty(taskList.tasks) ? taskList.tasks : []"></tasks>
             <!--/ Tasks -->
 
           </div>
@@ -47,8 +58,6 @@
 </template>
 
 <script>
-import Tasks from './Tasks.vue';
-
 export default {
   props: {
     taskLists: {
@@ -56,35 +65,39 @@ export default {
       required: true
     }
   },
+  components: {
+    Tasks: require('./Tasks.vue').default
+  },
   data () {
     return {
       loading: false,
       activeTasks: []
     }
   },
-  components: {
-    Tasks
-  },
   methods: {
     /**
      * Toggle tasks visiblity.
      * 
-     * @param {integer}  taskListID
+     * @param {integer}  taskListId
      */
-    toggleTasksVisibility (taskListID) {
+    toggleTasksVisibility (taskListId) {
       // Check task list's task is visible or not
       let isTasksVisible = this.activeTasks.filter((value) => {
-        return value === taskListID;
+        return value === taskListId;
       });
       //-----------------------------------------
           
       if (isTasksVisible.length == 0) {
         // Add to active tasks
-        this.activeTasks.push(taskListID);
+        this.activeTasks.push(taskListId);
         //--------------------
+
+        // Show task list's tasks
+        this.showTasks(taskListId);
+        //----------------------- 
       } else {
         // Delete from active tasks
-        Vue.delete(this.activeTasks, this.activeTasks.indexOf(taskListID));
+        Vue.delete(this.activeTasks, this.activeTasks.indexOf(taskListId));
         //-------------------------
       }
     },
@@ -92,14 +105,14 @@ export default {
     /**
      * Tasks is active.
      * 
-     * @param {integer}  taskListID
+     * @param {integer}  taskListId
      */
-    tasksIsActive (taskListID) {
+    tasksIsActive (taskListId) {
       let visible = false;
 
       // Check task list's task is visible or not
       let isTasksVisible = this.activeTasks.filter((value) => {
-        return value === taskListID;
+        return value === taskListId;
       });
       //-----------------------------------------
 
@@ -113,29 +126,129 @@ export default {
     },
 
     /**
-     * Get tasks.
+     * Set task list.
      * 
-     * @param {integer}  taskListID
+     * @param {object}  taskList
      */
-    getTasks (taskListID) {
-      // Show loading
-      this.loading = true;
-      //-------------
+    setTaskList (taskList) {
+      this.taskLists.unshift(taskList);
+    },
 
-      axios.get(`tasks/${taskListID}`)
-        .then((response) => {
+    /**
+     * Delete task list.
+     * 
+     * @param {integer}  taskListId
+     */
+    deleteTaskList (taskListId) {      
+      this.$showToast('question', 'Are you sure to delete?', {}, (status) => {
+        if (status == true) {
+          // Show loader
+          this.$root.showLoader = true;
+          //------------
 
-        })
-        .catch((error) => {
+          axios.delete(`task-lists/${taskListId}`)
+            .then((response) => {
+              let data = response.data;
 
-        });
+              // Hide loader
+              this.$root.showLoader = false;
+              //------------
+
+              if (data.status == true) {
+                // Find task list in task lists
+                this.taskLists.find((_taskList, key) => {
+                  if (_taskList.id == taskListId) {
+                    // Update task lists
+                    Vue.delete(this.taskLists, key);
+                    //------------------
+
+                    return true;
+                  }
+                });
+                //-----------------------------
+
+                // Show message
+                this.$showToast('success', data.message);
+                //-------------
+              } else {
+                // Show message
+                this.$showToast('error', data.message);
+                //-------------
+              }
+            })
+            .catch((error) => {
+              // Hide loader
+              this.$root.showLoader = false;
+              //------------
+            });
+        }
+      });
+    },
+
+    /**
+     * Show tasks.
+     * 
+     * @param {integer}  taskListId
+     */
+    showTasks (taskListId) {
+      // Get task list of given id
+      let taskList = this.taskLists.find((_taskList) => _taskList.id === taskListId);
+      //--------------------------
+
+      // Get tasks
+      if (this.$isEmpty(taskList.tasks)) {
+        // Show loading
+        this.loading = true;
+        //-------------
+
+        axios.get(`tasks/${taskListId}`)
+          .then((response) => {
+            let data = response.data;
+
+            // Set tasks to task list
+            taskList.tasks = data.tasks;
+            //-----------------------
+
+            // Emit task list updated event
+            this.$eventBus.$emit('taskListUpdated', taskList);
+            //-----------------------------
+
+            // Hide loading
+            this.loading = false;
+            //-------------
+          })
+          .catch((error) => {
+            // Hide loading
+            this.loading = false;
+            //-------------
+          });
+      }
+      //----------
     }
+  },
+  created () {
+    // Listen to task list stored event
+    this.$eventBus.$on('taskListStored', (taskList) => this.setTaskList(taskList));
+    //---------------------------------
   }
 }
 </script>
 
 <style scoped>
-.task-lists .btn-toggle-task-list:hover, .task-lists .btn-toggle-task-list:focus .task-lists .btn-toggle-task-list:active {
-  text-decoration: unset;
+.task-lists .btn-toggle-task-list:hover, .task-lists .btn-toggle-task-list:focus, .task-lists .btn-toggle-task-list:active {
+  text-decoration: none;
+}
+
+.task-lists .actions {
+  margin-top: 8px;
+  text-align: right;
+}
+
+.task-lists .actions a {
+  font-size: 14px;
+}
+
+.task-lists .actions a:hover, .task-lists .actions a:focus, .task-lists .actions a:active {
+  text-decoration: none;
 }
 </style>

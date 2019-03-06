@@ -32,6 +32,14 @@ Route::group(['prefix' => 'projects'], function () {
 });
 //---------
 
+// Task Lists
+Route::group(['prefix' => 'task-lists'], function () {
+    Route::post('/{project_id}', 'API\TaskListController@store');
+    Route::put('/{task_list_id}', 'API\TaskListController@update');
+    Route::delete('/{task_list_id}', 'API\TaskListController@destroy');
+});
+//-----------
+
 // Tasks
 Route::group(['prefix' => 'tasks'], function () {
     Route::get('/{task_list_id}', 'API\TaskController@index');

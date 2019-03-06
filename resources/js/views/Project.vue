@@ -6,8 +6,8 @@
         <div class="row justify-content-center mb-4">
           <div class="col-md-8">
           <div class="border-bottom pb-3 text-right">
-            <a href="#" @click.prevent="$eventBus.$emit('addTaskList')" class="mr-3"><span class="ti-plus"></span> Add Task List</a>
-            <a href="#" @click.prevent="$eventBus.$emit('addTask')"><span class="ti-plus"></span> Add Task</a>
+            <a href="#" @click.prevent="$eventBus.$emit('addTaskList', project.id)" class="mr-3"><span class="ti-plus"></span> Add Task List</a>
+            <a href="#" @click.prevent="$eventBus.$emit('addTask', project.id)"><span class="ti-plus"></span> Add Task</a>
           </div>
           </div>
         </div>
@@ -21,14 +21,24 @@
             <!-- Project detail -->
             <div class="row">
               <div class="col-md-12">
-                <div class="card mb-3">
+                <div class="card border-0 shadow-sm mb-4">
                   <div class="card-body">
-                  <h5 class="card-title"><span class="ti-tag"></span> {{ project.name }}</h5>
-                  <p class="card-text ml-1" v-if="project.description">{{ project.description }}</p>
-                  <div class="mt-3 actions">
-                    <a href="#" class="text-primary" @click.prevent="$eventBus.$emit('editProject', project)"><span class="ti-write"></span> Edit</a>
-                    <a href="#" class="text-danger" v-if="$isEmpty(project.task_lists)" @click.prevent="deleteProject(project.id)"><span class="ti-trash"></span> Delete</a>
-                  </div>
+                  <h5 class="card-title">
+                    <div class="row">
+                      <div class="col-md-10">
+                        <span class="ti-bookmark-alt"></span> {{ project.name }}
+                      </div>
+                      <div class="col-md-2">
+                        <!-- Actions -->
+                        <div class="actions">
+                          <a href="" class="text-primary" @click.prevent="$eventBus.$emit('editProject', project)" v-tooltip="'Edit Project'"><span class="ti-write"></span></a>
+                          <a href="" class="text-danger" v-if="$isEmpty(project.task_lists)" @click.prevent="deleteProject(project.id)" v-tooltip="'Delete Project'"><span class="ti-trash"></span></a>
+                        </div>
+                        <!--/ Actions -->
+                      </div>
+                    </div>
+                  </h5>
+                  <p class="card-text ml-4" v-if="project.description">{{ project.description }}</p>
                   </div>
                 </div>
               </div>
@@ -62,20 +72,30 @@
     <edit-project-modal></edit-project-modal>
     <!--/ Edit project modal -->
 
+    <!-- Add task list modal -->
+    <add-task-list-modal></add-task-list-modal>
+    <!--/ Add task list modal -->
+
+    <!-- Edit task list modal -->
+    <edit-task-list-modal></edit-task-list-modal>
+    <!--/ Edit task list modal -->
+
+    <!-- Task detail modal -->
+    <task-detail-modal></task-detail-modal>
+    <!--/ Task detail modal -->
   </div>
 
 </template>
 
 <script>
-import BaseLayout from './BaseLayout.vue';
-import TaskList from '../components/TaskList.vue';
-import EditProjectModal from '../components/EditProjectModal.vue';
-
 export default {
   components: {
-    BaseLayout,
-    TaskList,
-    EditProjectModal
+    BaseLayout: require('./BaseLayout.vue').default,
+    TaskList: require('../components/TaskList.vue').default,
+    EditProjectModal: require('../components/EditProjectModal.vue').default,
+    AddTaskListModal: require('../components/AddTaskListModal.vue').default,
+    EditTaskListModal: require('../components/EditTaskListModal.vue').default,
+    TaskDetailModal: require('../components/TaskDetailModal.vue').default
   },
   data () {
     return {
@@ -138,43 +158,70 @@ export default {
      * @param {integer}  projectId
      */
     deleteProject (projectId) {
-      // Show loading
-      this.loading = true;
-      //-------------
+      this.$showToast('question', 'Are you sure to delete?', {}, (status) => {
+        if (status == true) {
+          // Show loader
+          this.$root.showLoader = true;
+          //------------
 
-      axios.delete(`projects/${projectId}`)
-        .then((response) => {
-          let data = response.data;
+          axios.delete(`projects/${projectId}`)
+            .then((response) => {
+              let data = response.data;
 
-          if (data.status == true) {
-            // Go to project
-            this.$router.push('/projects');
-            //--------------
+              if (data.status == true) {
+                // Go to project
+                this.$router.push('/projects');
+                //--------------
 
-            // Show message
-            this.$showToast('success', 'Project deleted, Redirected you to projects page.');
-            //-------------
-          } else {
-            // Show message
-            this.$showToast('error', data.message);
-            //-------------
-          }
+                // Show message
+                this.$showToast('success', 'Project deleted, Redirected you to projects page.');
+                //-------------
+              } else {
+                // Show message
+                this.$showToast('error', data.message);
+                //-------------
+              }
 
-          // Hide loading
-          this.loading = false;
-          //-------------
-        })
-        .catch((error) => {
-          // Hide loading
-          this.loading = false;
-          //-------------
-        });
+              // Hide loader
+              this.$root.showLoader = false;
+              //------------
+            })
+            .catch((error) => {
+              // Hide loader
+              this.$root.showLoader = false;
+              //------------
+            });
+        }
+      });
+    },
+
+    /**
+     * Update task list.
+     * 
+     * @param {object}  taskList
+     */
+    updateTaskList (taskList) {
+      // Find task list in task lists
+      this.project.task_lists.find((_taskList, key) => {
+        if (_taskList.id == taskList.id) {
+          // Update task lists
+          Vue.set(this.project.task_lists, key, taskList);
+          //------------------
+
+          return true;
+        }
+      });
+      //-----------------------------
     }
   },
   created () {
     // Listen to project updated event
     this.$eventBus.$on('projectUpdated', (project) => this.updateProject(project));
     //--------------------------------
+
+    // Listen to task list updated event
+    this.$eventBus.$on('taskListUpdated', (taskList) => this.updateTaskList(taskList));
+    //----------------------------------
   },
   mounted () {
     // Get project
@@ -207,8 +254,16 @@ export default {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
 
+.project .actions {
+  text-align: right; 
+}
+
 .project .actions a {
   font-size: 14px;
   margin-right: 5px;
 }
+
+.project .actions a:hover, .project .actions a:focus, .project .actions a:active {
+  text-decoration: none;
+} 
 </style>

@@ -1,7 +1,9 @@
 require('./bootstrap');
 
 import router from './routes';
+import { VTooltip } from 'v-tooltip';
 
+Vue.directive('tooltip', VTooltip);
 Vue.component('Loader', require('./components/Loader.vue').default);
 Vue.component('ModalLoader', require('./components/ModalLoader.vue').default);
 
@@ -9,6 +11,11 @@ new Vue({
   el: '#app',
   components: {
     App: require('./views/App').default
+  },
+  data () {
+    return {
+      showLoader: false
+    }
   },
   router,
   store,

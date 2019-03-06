@@ -9,7 +9,7 @@
             <modal-loader :show="loading"></modal-loader>
 
             <div class="modal-header shadow-sm">
-              <h5 class="modal-title"><span class="ti-write"></span> Edit Project</h5>
+              <h5 class="modal-title"><span class="ti-write"></span> Project</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true"><span class="ti-close"></span></span>
               </button>
@@ -28,6 +28,7 @@
             <div class="modal-footer">
               <button type="submit" class="btn btn-primary shadow-sm"><span class="ti-save"></span> Update</button>
             </div>
+            
           </div>
         </form>
       </div>

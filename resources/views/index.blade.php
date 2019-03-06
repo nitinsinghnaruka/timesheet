@@ -14,6 +14,7 @@
         <link href="{{ asset('css/themify-icons/themify-icons.css') }}" rel="stylesheet" type="text/css">
         
         <!-- Styles -->
+        <link href="{{ mix('css/tooltip.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ mix('css/app.css') }}" rel="stylesheet" type="text/css">
     
     </head>

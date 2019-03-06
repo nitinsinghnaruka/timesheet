@@ -10285,3 +10285,12 @@ body {
   min-height: 88px;
 }
 
+<<<<<<< HEAD
+=======
+.badge-pill {
+  padding-right: 0.6em;
+  padding-left: 0.6em;
+  border-radius: 10rem;
+}
+
+>>>>>>> 9c6a884bf438fb2142d83ca6fbab827ba4e4be6c

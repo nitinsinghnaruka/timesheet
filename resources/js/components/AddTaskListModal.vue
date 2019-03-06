@@ -1,15 +1,15 @@
 <template>
   <div>
 
-    <!-- Add project modal -->
-    <div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" ref="addProjectModal">
+    <!-- Add task list modal -->
+    <div class="modal fade" id="addTaskListModal" tabindex="-1" role="dialog" ref="addTaskListModal">
       <div class="modal-dialog" role="document">
-        <form @submit.prevent="storeProject()">
+        <form @submit.prevent="storeTaskList()">
           <div class="modal-content">
             <modal-loader :show="loading"></modal-loader>
 
             <div class="modal-header shadow-sm">
-              <h5 class="modal-title"><span class="ti-plus"></span> Project</h5>
+              <h5 class="modal-title"><span class="ti-plus"></span> Task List</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true"><span class="ti-close"></span></span>
               </button>
@@ -20,10 +20,6 @@
                 <input type="text" class="form-control" id="name" v-model="form.name">
                 <small id="nameHelp" class="form-text text-danger" v-if="form.errors.has('name')">{{ form.errors.get('name') }}</small>
               </div>
-              <div class="form-group">
-                <label for="description">Description</label>
-                <textarea class="form-control" id="description" v-model="form.description"></textarea>
-              </div>
             </div>
             <div class="modal-footer">
               <button type="submit" class="btn btn-primary shadow-sm"><span class="ti-save"></span> Save</button>
@@ -33,7 +29,7 @@
         </form>
       </div>
     </div>
-    <!--/ Add project modal -->
+    <!--/ Add task list modal -->
 
   </div>
 
@@ -44,42 +40,41 @@ export default {
   data () {
     return {
       loading: false,
-      project: null,
+      projectId: null,
       form: new Form({
-        name: null,
-        description: null
+        name: null
       })
     }
   },
   methods: {
     /**
-     * Add project.
+     * Add task list.
      */
-    addProject () {
-      // Show add project modal
-      $(this.$refs.addProjectModal).modal('show');
-      //-----------------------
+    addTaskList () {
+      // Show add task list modal
+      $(this.$refs.addTaskListModal).modal('show');
+      //-------------------------
     },
 
     /**
-     * Store project.
+     * Store task list.
      */
-    storeProject () {
+    storeTaskList () {
       // Show loading
       this.loading = true;
       //-------------
 
-      this.form.submit('post', 'projects')
+      this.form.submit('post', `task-lists/${this.projectId}`)
         .then((response) => {
           let data = response.data;
 
           if (data.status == true) {
-            // Emit project stored event
-            this.$eventBus.$emit('projectStored', data.project);
-            //--------------------------
+            // Emit task list stored event
+            this.$eventBus.$emit('taskListStored', data.task_list);
+            //----------------------------
 
             // Hide modal
-            $(this.$refs.addProjectModal).modal('hide');
+            $(this.$refs.addTaskListModal).modal('hide');
             //-----------
 
             // Show message
@@ -103,9 +98,17 @@ export default {
     }
   },
   created () {
-    // Listen to add project event
-    this.$eventBus.$on('addProject', () => this.addProject());
-    //----------------------------
+    // Listen to add task list event
+    this.$eventBus.$on('addTaskList', (projectId) => {
+        // Set project id
+        this.projectId = projectId;
+        //---------------
+
+        // Call add task list
+        this.addTaskList();
+        //-------------------
+    });
+    //------------------------------
   }
 }
 </script>

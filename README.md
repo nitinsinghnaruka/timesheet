@@ -1,2 +1,2 @@
 # timesheet
-Here you can maintain your daily project's tasks.
+Here you can maintain your project's tasks and their log hours.

@@ -6,7 +6,7 @@
         <div class="row justify-content-center mb-4">
           <div class="col-md-8">
             <div class="border-bottom pb-3 text-right">
-              <a href="#" @click.prevent="$eventBus.$emit('addProject')"><span class="ti-plus"></span> Add Project</a>
+              <a href="" @click.prevent="$eventBus.$emit('addProject')"><span class="ti-plus"></span> Add Project</a>
             </div>
           </div>
         </div>
@@ -56,13 +56,10 @@
 </template>
 
 <script>
-import BaseLayout from './BaseLayout.vue';
-import AddProjectModal from '../components/AddProjectModal.vue';
-
 export default {
   components: {
-    BaseLayout,
-    AddProjectModal
+    BaseLayout: require('./BaseLayout.vue').default,
+    AddProjectModal: require('../components/AddProjectModal.vue').default
   },
   data () {
     return {

@@ -34,9 +34,10 @@
 </template>
 
 <script>
-import AppTime from '../components/AppTime';
-
 export default {
+  components: {
+    AppTime: require('../components/AppTime').default
+  },
   data () {
     return {
       calculatedHours: '00:00:00',

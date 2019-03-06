@@ -1,5 +1,7 @@
 <template>
   <div>
+    <ajax-loader :show="showLoader"></ajax-loader>
+
     <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-light">
       <router-link to="/" tag="a" class="navbar-brand pt-1">Timesheet</router-link>
@@ -46,6 +48,21 @@
 
 <script>
 export default {
-  //
+  components: {
+    AjaxLoader: require('../components/AjaxLoader').default
+  },
+  data () {
+    return {
+      //
+    }
+  },
+  computed: {
+    /**
+     * Show loader.
+     */
+    showLoader () {
+      return this.$root.showLoader;
+    } 
+  }
 }
 </script>
