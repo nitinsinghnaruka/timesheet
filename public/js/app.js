@@ -2122,66 +2122,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AppCalculateTime.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AppCalculateTime.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    AppTime: __webpack_require__(/*! ../components/AppTime */ "./resources/js/components/AppTime.vue").default
-  },
-  data: function data() {
-    return {
-      calculatedHours: '00:00:00',
-      time: null,
-      timeError: null,
-      times: []
-    };
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AppTime.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AppTime.vue?vue&type=script&lang=js& ***!
@@ -3037,16 +2977,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     BaseLayout: __webpack_require__(/*! ./BaseLayout.vue */ "./resources/js/views/BaseLayout.vue").default,
-    AppTime: __webpack_require__(/*! ../components/AppTime.vue */ "./resources/js/components/AppTime.vue").default,
-    AppCalculateTime: __webpack_require__(/*! ../components/AppCalculateTime.vue */ "./resources/js/components/AppCalculateTime.vue").default
+    AppTime: __webpack_require__(/*! ../components/AppTime.vue */ "./resources/js/components/AppTime.vue").default
   }
 });
 
@@ -66269,176 +66203,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AppCalculateTime.vue?vue&type=template&id=399f841d&":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AppCalculateTime.vue?vue&type=template&id=399f841d& ***!
-  \*******************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card rounded shadow-sm" }, [
-    _c("div", { staticClass: "card-body" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "row mt-4" }, [
-        _c("div", { staticClass: "col-md-6" }, [
-          _c("h3", { staticClass: "text-center" }, [
-            _vm._v(_vm._s(_vm.calculatedHours))
-          ]),
-          _vm._v(" "),
-          _c(
-            "form",
-            {
-              staticClass: "mt-3 text-center",
-              attrs: { type: "POST" },
-              on: {
-                keypress: function($event) {
-                  _vm.timeError = null
-                },
-                submit: function($event) {
-                  $event.preventDefault()
-                  _vm.addTime()
-                }
-              }
-            },
-            [
-              _c("div", { staticClass: "form-group" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.time,
-                      expression: "time"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    placeholder: "Enter time",
-                    name: "time"
-                  },
-                  domProps: { value: _vm.time },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.time = $event.target.value
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "small",
-                  {
-                    staticClass: "form-text text-muted text-left",
-                    attrs: { id: "timeHelp" }
-                  },
-                  [_vm._v("Time must be in 00:00 format.")]
-                ),
-                _vm._v(" "),
-                _vm.timeError
-                  ? _c(
-                      "small",
-                      {
-                        staticClass: "form-text text-danger text-left",
-                        attrs: { id: "timeHelp" }
-                      },
-                      [_vm._v(_vm._s(_vm.timeError))]
-                    )
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _vm._m(1)
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-6" }, [
-          _vm.times.length
-            ? _c("div", [
-                _c(
-                  "ul",
-                  {
-                    staticClass: "list-group",
-                    staticStyle: { "overflow-x": "auto", "max-height": "200px" }
-                  },
-                  _vm._l(_vm.times, function(time, index) {
-                    return _c(
-                      "li",
-                      {
-                        key: index,
-                        staticClass: "list-group-item text-center p-2"
-                      },
-                      [_vm._v(_vm._s(time))]
-                    )
-                  }),
-                  0
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "mt-2 text-center pl-2" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "card-link text-danger",
-                      attrs: { href: "#" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          _vm.clearCalculatedHours()
-                        }
-                      }
-                    },
-                    [_vm._v("Clear")]
-                  )
-                ])
-              ])
-            : _c("div", [
-                _c("div", { staticClass: "text-center mt-5" }, [
-                  _vm._v("No times.")
-                ])
-              ])
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h4", { staticClass: "card-title text-center" }, [
-      _c("span", { staticClass: "ti-time" }),
-      _vm._v(" Calculate Time")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-      [_c("span", { staticClass: "ti-plus" }), _vm._v(" Add")]
-    )
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AppTime.vue?vue&type=template&id=ef810a1a&":
 /*!**********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AppTime.vue?vue&type=template&id=ef810a1a& ***!
@@ -67558,9 +67322,7 @@ var render = function() {
             ])
           ],
           1
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" }, [_c("app-calculate-time")], 1)
+        )
       ])
     ])
   ])
@@ -84068,75 +83830,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AjaxLoader_vue_vue_type_template_id_20f2017e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AjaxLoader_vue_vue_type_template_id_20f2017e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/AppCalculateTime.vue":
-/*!******************************************************!*\
-  !*** ./resources/js/components/AppCalculateTime.vue ***!
-  \******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _AppCalculateTime_vue_vue_type_template_id_399f841d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AppCalculateTime.vue?vue&type=template&id=399f841d& */ "./resources/js/components/AppCalculateTime.vue?vue&type=template&id=399f841d&");
-/* harmony import */ var _AppCalculateTime_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AppCalculateTime.vue?vue&type=script&lang=js& */ "./resources/js/components/AppCalculateTime.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _AppCalculateTime_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _AppCalculateTime_vue_vue_type_template_id_399f841d___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _AppCalculateTime_vue_vue_type_template_id_399f841d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/AppCalculateTime.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/AppCalculateTime.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/components/AppCalculateTime.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AppCalculateTime_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./AppCalculateTime.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AppCalculateTime.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AppCalculateTime_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/AppCalculateTime.vue?vue&type=template&id=399f841d&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/AppCalculateTime.vue?vue&type=template&id=399f841d& ***!
-  \*************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AppCalculateTime_vue_vue_type_template_id_399f841d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./AppCalculateTime.vue?vue&type=template&id=399f841d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AppCalculateTime.vue?vue&type=template&id=399f841d&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AppCalculateTime_vue_vue_type_template_id_399f841d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AppCalculateTime_vue_vue_type_template_id_399f841d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

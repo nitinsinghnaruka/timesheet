@@ -17,7 +17,7 @@
 
             <!-- Projects list -->
             <div v-if="! $isEmpty(projects)">
-              <div class="row">
+              <div class="row justify-content-center">
                 <div class="col-md-4" v-for="project in projects" :key="project.id">
                   <router-link :to="'/projects/' + project.slug" class="project-link">
                     <div class="card text-center mb-3">

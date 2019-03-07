@@ -20,9 +20,6 @@
                   </div>
                   <div class="clearfix"></div>
                 </div>
-                <div class="mt-2">
-                  <router-link to="projects" class="card-link text-success">Projects</router-link>
-                </div>
               </div>
             </div>
 
